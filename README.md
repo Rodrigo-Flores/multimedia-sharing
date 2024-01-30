@@ -9,6 +9,17 @@ This Media Browser application is a Flask-based web server that allows users to 
 - Responsive design with Bootstrap for improved mobile experience.
 - Pagination for easy navigation of directories with many files.
 
+## Screenshots
+
+### Main Page
+![Main Page](/assets/images/main_page.png "Main Page")
+
+### Viewing an Image
+![Image View](/assets/images/image_view.png "Viewing an Image")
+
+### Pagination Feature
+![Pagination](/assets/images/pagination.png "Pagination")
+
 ## Installation
 To get this project running on your local machine, follow these steps:
 1. **Clone the Repository**
