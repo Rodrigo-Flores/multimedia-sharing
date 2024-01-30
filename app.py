@@ -7,9 +7,11 @@ ITEMS_PER_PAGE = 9
 
 MEDIA_FOLDER = '/media/test_drive'
 
+
 @app.route('/')
 def index():
     return paginate_directory(MEDIA_FOLDER, '')
+
 
 @app.route('/media/', defaults={'filename': ''})
 @app.route('/media/<path:filename>')
@@ -22,6 +24,7 @@ def media(filename):
             return send_from_directory(MEDIA_FOLDER, filename)
         except FileNotFoundError:
             abort(404)
+
 
 def paginate_directory(directory, current_path):
     page = request.args.get('page', 1, type=int)
@@ -37,6 +40,7 @@ def paginate_directory(directory, current_path):
         files.insert(0, os.path.join(parent_dir, ".."))
 
     return render_template('index.html', files=files, current_path=current_path, total_pages=total_pages, current_page=page)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

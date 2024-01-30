@@ -2,134 +2,127 @@
 <html lang="es-ES">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Multimedia</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #343a40;
-            color: #fff;
-        }
+  <meta charset="UTF-8">
+  <title>Multimedia</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #343a40;
+      color: #fff;
+    }
 
-        .btn-primary {
-            background-color: #007bff;
-        }
+    .btn-primary {
+      background-color: #007bff;
+    }
 
-        .btn-secondary {
-            background-color: #6c757d;
-        }
+    .btn-secondary {
+      background-color: #6c757d;
+    }
 
-        .img-thumbnail {
-            background-color: #495057;
-        }
+    .img-thumbnail {
+      background-color: #495057;
+    }
 
-        .page-item.active .page-link {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
+    .page-item.active .page-link {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
 
-        .page-link {
-            color: #007bff;
-        }
+    .page-link {
+      color: #007bff;
+    }
 
-        .page-link:hover {
-            color: #0056b3;
-        }
+    .page-link:hover {
+      color: #0056b3;
+    }
 
-        .navbar {
-            background-color: #212529;
-        }
-    </style>
+    .navbar {
+      background-color: #212529;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="mt-4 mb-3">Carpeta actual: {{ current_path }}</h1>
+  <div class="container">
+    <h1 class="mt-4 mb-3">Carpeta actual: {{ current_path }}</h1>
 
-        <!-- Go Back Link -->
-        {% if current_path != '' %}
-        <div>
-            <a href="{{ url_for('media', filename=current_path + '/..') }}" class="btn btn-secondary btn-sm mb-3">Go
-                Back</a>
-        </div>
-        {% endif %}
-
-        <div class="row">
-            {% for file in files %}
-            <!-- Check for directory -->
-            {% if not file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.webm', '.ogg')) %}
-            <div class="col-md-4 mb-4">
-                <a href="{{ url_for('media', filename=file) }}" class="btn btn-primary btn-block">{{ file }}</a>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-
-        <div class="row">
-            {% for file in files %}
-            <!-- Image or Video -->
-            {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.webm', '.ogg')) %}
-            <div class="col-md-4 mb-4">
-                <a href="{{ url_for('media', filename=file) }}" class="d-block mb-2">
-                    {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
-                    <!-- Image Preview -->
-                    <img src="{{ url_for('media', filename=file) }}" class="img-fluid img-thumbnail">
-                    {% elif file.lower().endswith(('.mp4', '.webm', '.ogg')) %}
-                    <!-- Video Preview -->
-                    <video width="100%" height="auto" controls class="img-thumbnail">
-                        <source src="{{ url_for('media', filename=file) }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    {% endif %}
-                </a>
-                <p>{{ file }}</p>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
+    {% if current_path != '' %}
+    <div>
+      <a href="{{ url_for('media', filename=current_path + '/..') }}" class="btn btn-secondary btn-sm mb-3">Go
+        Back</a>
     </div>
+    {% endif %}
+
     <div class="row">
-        <div class="col-md-12">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
-                        <a class="page-link"
-                            href="{{ url_for('media', filename=current_path, page=current_page-1) if current_path else url_for('index', page=current_page-1) }}"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% set link_limit = 3 %}
-                    {% for page in range(1, total_pages + 1) %}
-                    {% if page == 1 or page == total_pages or page == current_page or current_page - link_limit <= page
-                        <=current_page + link_limit %} <li
-                        class="page-item {% if page == current_page %}active{% endif %}">
-                        <a class="page-link"
-                            href="{{ url_for('media', filename=current_path, page=page) if current_path else url_for('index', page=page) }}">{{
-                            page }}</a>
-                        </li>
-                        {% elif page == current_page - link_limit - 1 or page == current_page + link_limit + 1 %}
-                        <li class="page-item disabled"><span class="page-link">...</span></li>
-                        {% endif %}
-                        {% endfor %}
-                        <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
-                            <a class="page-link"
-                                href="{{ url_for('media', filename=current_path, page=current_page+1) if current_path else url_for('index', page=current_page+1) }}"
-                                aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                </ul>
-            </nav>
-        </div>
+      {% for file in files %}
+      {% if not file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.webm', '.ogg')) %}
+      <div class="col-md-4 mb-4">
+        <a href="{{ url_for('media', filename=file) }}" class="btn btn-primary btn-block">{{ file }}</a>
+      </div>
+      {% endif %}
+      {% endfor %}
     </div>
 
+    <div class="row">
+      {% for file in files %}
+      {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.webm', '.ogg')) %}
+      <div class="col-md-4 mb-4">
+        <a href="{{ url_for('media', filename=file) }}" class="d-block mb-2">
+          {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+          <img src="{{ url_for('media', filename=file) }}" class="img-fluid img-thumbnail">
+          {% elif file.lower().endswith(('.mp4', '.webm', '.ogg')) %}
+          <video width="100%" height="auto" controls class="img-thumbnail">
+            <source src="{{ url_for('media', filename=file) }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          {% endif %}
+        </a>
+        <p>{{ file }}</p>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
+            <a class="page-link"
+              href="{{ url_for('media', filename=current_path, page=current_page-1) if current_path else url_for('index', page=current_page-1) }}"
+              aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% set link_limit = 3 %}
+          {% for page in range(1, total_pages + 1) %}
+          {% if page == 1 or page == total_pages or page == current_page or current_page - link_limit <= page
+            <=current_page + link_limit %} <li class="page-item {% if page == current_page %}active{% endif %}">
+            <a class="page-link"
+              href="{{ url_for('media', filename=current_path, page=page) if current_path else url_for('index', page=page) }}">{{
+              page }}</a>
+            </li>
+            {% elif page == current_page - link_limit - 1 or page == current_page + link_limit + 1 %}
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+            {% endfor %}
+            <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
+              <a class="page-link"
+                href="{{ url_for('media', filename=current_path, page=current_page+1) if current_path else url_for('index', page=current_page+1) }}"
+                aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 
 
 
-    <!-- Optional Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optional Bootstrap JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
