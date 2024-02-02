@@ -71,10 +71,10 @@
           {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
           <img src="{{ url_for('media', filename=file) }}" class="img-fluid img-thumbnail">
           {% elif file.lower().endswith(('.mp4', '.webm', '.ogg')) %}
-          <video width="100%" height="auto" controls playsinline class="img-thumbnail">
+          <video width="100%" height="auto" controls playsinline preload="auto" class="img-thumbnail">
             <source src="{{ url_for('media', filename=file) }}" type="video/mp4">
             Your browser does not support the video tag.
-          </video>
+        </video>
           {% endif %}
         </a>
         <p>{{ file }}</p>
