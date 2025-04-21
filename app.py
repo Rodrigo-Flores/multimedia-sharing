@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 ITEMS_PER_PAGE = 9
 
-MEDIA_FOLDER = '/media/test_drive'
+MEDIA_FOLDER = '/Users/rflores/Downloads/mli_categories_tree'
 
 
 @app.route('/')
